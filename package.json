@@ -1,0 +1,51 @@
+{
+  "type":"module",
+  "name":"alone-build",
+  "version":"1.0.1",
+  "license":"license",
+  "files":[
+    "README.md",
+    "dist",
+    "tsconfig.json"
+  ],
+  "exports":{
+    "./build":{
+      "import":"./dist/es/build.js",
+      "require":"./dist/cjs/build.js",
+      "types":"./dist/types/build.d.ts"
+    },
+    "./create":{
+      "import":"./dist/es/create.js",
+      "require":"./dist/cjs/create.js",
+      "types":"./dist/types/create.d.ts"
+    },
+    ".":{
+      "import":"./dist/es/index.js",
+      "require":"./dist/cjs/index.js",
+      "types":"./dist/types/index.d.ts"
+    },
+    "./index":{
+      "import":"./dist/es/index.js",
+      "require":"./dist/cjs/index.js",
+      "types":"./dist/types/index.d.ts"
+    }
+  },
+  "bin":{
+    "alone-build":"./dist/es/index.js"
+  },
+  "scripts":{
+    "file":"node ./src/index.js",
+    "build":"rm -rf ./dist/ && rollup -c && tsc",
+    "code":"rm -rf ./dist/ && rollup -c && javascript-obfuscator ./dist/ --output ./build && rm -rf ./dist/ && mv ./build ./dist && tsc"
+  },
+  "devDependencies":{
+    "@rollup/plugin-commonjs":"^28.0.3",
+    "@rollup/plugin-node-resolve":"^16.0.1",
+    "@rollup/plugin-terser":"^0.4.4",
+    "@rollup/plugin-typescript":"^12.1.2",
+    "javascript-obfuscator":"^4.1.1",
+    "typescript":"^5.8.3",
+    "rollup":"^4.40.2",
+    "tslib":"^2.8.1"
+  }
+}
