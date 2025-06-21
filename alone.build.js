@@ -12,6 +12,8 @@ export const external = (id, file, type) => {
 export default {
     //开发目录
     input: "src",
+    //开发格式
+    format: ["js"],
     //打包目录
     output: "dist",
     //默认使用文件名 如 import nameDemo from "name-demo"; 会默认使用什么js

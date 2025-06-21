@@ -10,7 +10,7 @@ export default [
                         output: [
                         {dir: "dist/es",format: "es",exports: "named"}
                         ],
-                        plugins: [resolve(), commonjs(), typescript({declaration: false, declarationDir: undefined, outDir: undefined}), terser()],
+                        plugins: [resolve(), commonjs(),terser()],
                         external: (id) => external(id, "src/build.js", "es")
                     },
                     {
@@ -18,7 +18,7 @@ export default [
                         output: [
                         {dir: "dist/cjs",format: "cjs",exports: "named"}
                         ],
-                        plugins: [resolve(), commonjs(), typescript({declaration: false, declarationDir: undefined, outDir: undefined}), terser()],
+                        plugins: [resolve(), commonjs(),terser()],
                         external: (id) => external(id, "src/build.js", "cjs")
                     },
                     {
@@ -26,7 +26,7 @@ export default [
                         output: [
                         {dir: "dist/es",format: "es",exports: "named"}
                         ],
-                        plugins: [resolve(), commonjs(), typescript({declaration: false, declarationDir: undefined, outDir: undefined}), terser()],
+                        plugins: [resolve(), commonjs(),terser()],
                         external: (id) => external(id, "src/create.js", "es")
                     },
                     {
@@ -34,7 +34,7 @@ export default [
                         output: [
                         {dir: "dist/cjs",format: "cjs",exports: "named"}
                         ],
-                        plugins: [resolve(), commonjs(), typescript({declaration: false, declarationDir: undefined, outDir: undefined}), terser()],
+                        plugins: [resolve(), commonjs(),terser()],
                         external: (id) => external(id, "src/create.js", "cjs")
                     },
                     {
@@ -42,7 +42,7 @@ export default [
                         output: [
                         {dir: "dist/es",format: "es",exports: "named"}
                         ],
-                        plugins: [resolve(), commonjs(), typescript({declaration: false, declarationDir: undefined, outDir: undefined}), terser()],
+                        plugins: [resolve(), commonjs(),terser()],
                         external: (id) => external(id, "src/index.js", "es")
                     },
                     {
@@ -50,7 +50,7 @@ export default [
                         output: [
                         {dir: "dist/cjs",format: "cjs",exports: "named"}
                         ],
-                        plugins: [resolve(), commonjs(), typescript({declaration: false, declarationDir: undefined, outDir: undefined}), terser()],
+                        plugins: [resolve(), commonjs(),terser()],
                         external: (id) => external(id, "src/index.js", "cjs")
                     }
 ];
