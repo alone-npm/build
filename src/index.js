@@ -154,6 +154,7 @@ export default {
             },
             //生成 .gitignore文件
             gitIgnore(content = "") {
+
                 const file = path.resolve(process.cwd(), '.gitignore');
                 content = `.idea\n.vscode\n.DS_Store\nnode_modules\npnpm-lock.yaml\npackage-lock.json\nyarn.lock\nbun.lockb\n${content}`;
                 fs.writeFileSync(file, content);
@@ -173,6 +174,16 @@ export default [`;
                 const fileKeys = Object.keys(fileObject);
                 const fileLength = fileKeys.length;
                 if (fileLength > 0) {
+                    let tsArr = [resolve(), commonjs(), terser()];
+                    let tsStr = `[resolve(), commonjs(),terser()]`;
+                    if (this.config.format.includes('ts')) {
+                        tsStr = `[resolve(), commonjs(),typescript({declaration: false, declarationDir: undefined, outDir: undefined}),terser()]`;
+                        tsArr = [resolve(), commonjs(), typescript({
+                            declaration: false,
+                            declarationDir: undefined,
+                            outDir: undefined
+                        }), terser()];
+                    }
                     for (let i = 0; i < fileLength; i++) {
                         const fileName = fileKeys[i];
                         const filePath = fileObject[fileName];
@@ -185,11 +196,10 @@ export default [`;
                         output: [
                         ${outputStr.replace(/\n$/, '').replace(/^,|,$/g, '')}
                         ],
-                        plugins: [resolve(), commonjs(), typescript({declaration: false, declarationDir: undefined, outDir: undefined}), terser()],
+                        plugins: ${tsStr},
                         external: (id) => external(id, "${path.relative(process.cwd(), filePath)}", "${type}")
                     },`;
                         }
-
                         if (this.config.dist.es) {
                             rollupArray.push({
                                 input: path.relative(process.cwd(), filePath),
@@ -198,11 +208,7 @@ export default [`;
                                     format: "es",
                                     exports: "named"
                                 }],
-                                plugins: [resolve(), commonjs(), typescript({
-                                    declaration: false,
-                                    declarationDir: undefined,
-                                    outDir: undefined
-                                }), terser()]
+                                plugins: tsArr
                             });
                             rollupString += getString(`{dir: "${this.config.output}/${this.config.dist.es}${srcPath}",format: "es",exports: "named"}`, 'es');
                         }
@@ -214,11 +220,7 @@ export default [`;
                                     format: "cjs",
                                     exports: "named"
                                 }],
-                                plugins: [resolve(), commonjs(), typescript({
-                                    declaration: false,
-                                    declarationDir: undefined,
-                                    outDir: undefined
-                                }), terser()]
+                                plugins: tsArr
                             });
                             rollupString += getString(`{dir: "${this.config.output}/${this.config.dist.cjs}${srcPath}",format: "cjs",exports: "named"}`, 'cjs');
                         }
@@ -234,11 +236,7 @@ export default [`;
                                     name: path.basename(fileName, '.js'),
                                     exports: exports
                                 }],
-                                plugins: [resolve(), commonjs(), typescript({
-                                    declaration: false,
-                                    declarationDir: undefined,
-                                    outDir: undefined
-                                }), terser()]
+                                plugins: tsArr
                             });
                             rollupString += getString(`{dir: "${this.config.output}/${this.config.dist.umd}${srcPath}",format: "umd",name: "${path.basename(fileName, '.js')}",exports: "${exports}"}`, 'umd');
                         }
